@@ -14,6 +14,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'prettier'],
   rules: {
+    "import/no-unresolved": "error",
     'prettier/prettier': 'error',
     'react/function-component-definition': 'off',
     'react/react-in-jsx-scope': 'off',
@@ -29,5 +30,15 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json'
+  },
+  settings:{
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        project: "./tsconfig.json"
+      }
+    }
   }
 };
