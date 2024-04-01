@@ -1,54 +1,46 @@
 import axios from 'axios';
-import { ICarCreate, ICarResponse, ICarUpdate } from '../models/api/Car.ts';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { ICarCreate, ICar, ICarUpdate } from '../models/api/Car';
 
-export default class CarAPI {
-  static async getCars(limit: number, page: number): Promise<ICarResponse[]> {
-    const response = await axios.get<ICarResponse[]>(
-      `http://127.0.0.1:3000/garage`,
-      {
+const BASE_URL = 'http://127.0.0.1:3000';
+const PAGINTAION_LIMIT = 7;
+
+export const carApi = createApi({
+  reducerPath: 'carApi',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ['Cars'],
+  endpoints: (build) => ({
+    getAllCars: build.query<ICar[], number>({
+      query: (page: number = 1) => ({
+        url: '/garage',
         params: {
-          _limit: limit,
+          _limit: PAGINTAION_LIMIT,
           _page: page,
         },
-      },
-    );
-    // todo нужно создать тип возврата и достать X-Total-Count
-    return response.data;
-  }
-
-  static async getCarById(id: number): Promise<ICarResponse> {
-    const response = await axios.get<ICarResponse>(
-      `http://127.0.0.1:3000/garage/${id}`,
-    );
-    // todo возможно нужно проверить коды success что бы точно не было ошибок
-    return response.data;
-  }
-
-  static async CreateCar(car: ICarCreate): Promise<ICarResponse> {
-    const response = await axios.post<ICarResponse>(
-      `http://127.0.0.1:3000/garage`,
-      {
-        car,
-      },
-    );
-    return response.data;
-  }
-
-  static async deleteCarById(id: number): Promise<void> {
-    await axios.delete<void>(`http://127.0.0.1:3000/garage/${id}`);
-    // todo обработать код 404?
-  }
-
-  static async updateCarById(
-    id: number,
-    car: ICarUpdate,
-  ): Promise<ICarResponse> {
-    const response = await axios.put<ICarResponse>(
-      `http://127.0.0.1:3000/garage/${id}`,
-      {
-        car,
-      },
-    );
-    return response.data;
-  }
-}
+      }),
+    }),
+    createCar: build.mutation<ICarCreate, ICar>({
+      query: (car) => ({
+        url: '/garage',
+        method: 'POST',
+        body: car,
+      }),
+      invalidatesTags: ['Cars'],
+    }),
+    updateCar: build.mutation<ICar, ICar>({
+      query: (car) => ({
+        url: `/garage${car.id}`,
+        method: 'POST',
+        body: car,
+      }),
+      invalidatesTags: ['Cars'],
+    }),
+    deleteCar: build.mutation<ICar, ICar>({
+      query: (car) => ({
+        url: `/garage${car.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Cars'],
+    }),
+  }),
+});
