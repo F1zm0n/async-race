@@ -1,7 +1,10 @@
+import { IEngine } from './Engine';
+
 export interface ICar {
   name: string;
   color: string;
   id: number;
+  engine?: IEngine;
 }
 
 export interface ICarCreate {

@@ -1,11 +1,8 @@
-import axios from 'axios';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ICarCreate, ICar, ICarUpdate } from '../models/api/Car';
+import { ICar, ICarCreate } from '../models/api/Car';
+import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
-const BASE_URL = 'http://127.0.0.1:3000';
-const PAGINTAION_LIMIT = 7;
-
-export const carApi = createApi({
+export default createApi({
   reducerPath: 'carApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ['Cars'],
@@ -14,7 +11,7 @@ export const carApi = createApi({
       query: (page: number = 1) => ({
         url: '/garage',
         params: {
-          _limit: PAGINTAION_LIMIT,
+          _limit: PAGINATION_LIMIT,
           _page: page,
         },
       }),
@@ -30,7 +27,7 @@ export const carApi = createApi({
     updateCar: build.mutation<ICar, ICar>({
       query: (car) => ({
         url: `/garage${car.id}`,
-        method: 'POST',
+        method: 'PUT',
         body: car,
       }),
       invalidatesTags: ['Cars'],

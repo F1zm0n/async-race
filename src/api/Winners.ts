@@ -1,15 +1,43 @@
-import axios from 'axios';
-import { IWinnersGetParams, IWinnersResponse } from '../models/api/Winners.ts';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IWinner } from '../models/api/Winners';
+import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
-export default class WinnersAPI {
-  static async GetWinners(
-    params?: IWinnersGetParams,
-  ): Promise<IWinnersResponse[]> {
-    const response = await axios.get(`http://127.0.0.1:3000/engine`, {
-      params: { params },
-    });
-    // todo X-Total-Count
-    return response.data;
-  }
-  // todo get winner endpoint
-}
+export default createApi({
+  reducerPath: 'winnersApi',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  tagTypes: ['Winners'],
+  endpoints: (build) => ({
+    getAllCars: build.query<IWinner[], number>({
+      query: (page: number = 1) => ({
+        url: '/winners',
+        params: {
+          _limit: PAGINATION_LIMIT,
+          _page: page,
+        },
+      }),
+    }),
+    createCar: build.mutation<IWinner, IWinner>({
+      query: (winner) => ({
+        url: `/winners/${winner.id}`,
+        method: 'PUT',
+        body: winner,
+      }),
+      invalidatesTags: ['Winners'],
+    }),
+    updateCar: build.mutation<IWinner, IWinner>({
+      query: (winner) => ({
+        url: `/garage${winner.id}`,
+        method: 'POST',
+        body: winner,
+      }),
+      invalidatesTags: ['Winners'],
+    }),
+    deleteCar: build.mutation<IWinner, IWinner>({
+      query: (winner) => ({
+        url: `/garage${winner.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Winners'],
+    }),
+  }),
+});

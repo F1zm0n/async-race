@@ -1,31 +1,30 @@
-import axios from 'axios';
-import { EngineStatus, IEngineResponse } from '../models/api/Engine.ts';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { BASE_URL } from '../models/types/config';
+import { IWinner } from '../models/api/Winners';
+import { IEngine, StartEngineParams } from '../models/api/Engine';
 
-export default class EngineAPI {
-  static async toggleCarEngine(
-    id: number,
-    status: EngineStatus,
-  ): Promise<IEngineResponse> {
-    // todo обработать коды ошибок
-    const response = await axios.patch<IEngineResponse>(
-      `http://127.0.0.1:3000/engine`,
-      {},
-      {
-        params: { id, status },
-      },
-    );
-    return response.data;
-  }
-
-  static async driveCarEngine(id: number): Promise<void> {
-    const status = 'drive';
-    // todo обработать коды ошибок
-    await axios.patch<IEngineResponse>(
-      `http://127.0.0.1:3000/engine`,
-      {},
-      {
-        params: { id, status },
-      },
-    );
-  }
-}
+export default createApi({
+  reducerPath: 'engineApi',
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  endpoints: (build) => ({
+    startStopEngine: build.mutation<IEngine, StartEngineParams>({
+      query: (params) => ({
+        url: `/engine`,
+        method: 'PATCH',
+        params: {
+          params,
+        },
+      }),
+    }),
+    driveModeEngine: build.mutation<IWinner, number>({
+      query: (id) => ({
+        url: `/engine`,
+        method: 'PATCH',
+        params: {
+          id,
+          status: 'drive',
+        },
+      }),
+    }),
+  }),
+});

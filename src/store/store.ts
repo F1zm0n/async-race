@@ -1,15 +1,23 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { carApi } from '../api/Car';
+import carApi from '../api/Car';
+import engineApi from '../api/Engine';
+import winnersApi from '../api/Winners';
 
 const rootReducer = combineReducers({
   [carApi.reducerPath]: carApi.reducer,
+  [engineApi.reducerPath]: engineApi.reducer,
+  [winnersApi.reducerPath]: winnersApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(carApi.middleware),
+      getDefaultMiddleware().concat(
+        carApi.middleware,
+        engineApi.middleware,
+        winnersApi.middleware,
+      ),
   });
 };
 
