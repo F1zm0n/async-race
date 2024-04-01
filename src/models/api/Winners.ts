@@ -18,6 +18,9 @@ export interface IWinnersUpdate {
 export interface IWinnersGetParams {
   _page?: number;
   _limit?: number;
-  _sort?: 'id' | 'wins' | 'time';
-  _order?: 'ASC' | 'DESC';
+  _sort?: SortParams;
+  _order?: OrderParams;
 }
+
+type SortParams = 'id' | 'wins' | 'time';
+type OrderParams = 'ASC' | 'DESC';

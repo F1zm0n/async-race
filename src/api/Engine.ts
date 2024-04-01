@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EngineStatus, IEngineResponse } from '../models/Engine';
+import { EngineStatus, IEngineResponse } from '../models/api/Engine.ts';
 
 export default class EngineAPI {
   static async toggleCarEngine(

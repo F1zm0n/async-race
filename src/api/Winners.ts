@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IWinnersGetParams, IWinnersResponse } from '../models/Winners.ts';
+import { IWinnersGetParams, IWinnersResponse } from '../models/api/Winners.ts';
 
 export default class WinnersAPI {
   static async GetWinners(

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ICarCreate, ICarResponse, ICarUpdate } from '../models/Car';
+import { ICarCreate, ICarResponse, ICarUpdate } from '../models/api/Car.ts';
 
 export default class CarAPI {
   static async getCars(limit: number, page: number): Promise<ICarResponse[]> {
