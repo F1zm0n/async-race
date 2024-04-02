@@ -14,6 +14,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-refresh', 'prettier'],
   rules: {
+    "react/jsx-props-no-spreading": "off",
     "import/no-unresolved": "error",
     'prettier/prettier': 'error',
     'react/function-component-definition': 'off',

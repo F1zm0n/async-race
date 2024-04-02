@@ -1,0 +1,42 @@
+.car {
+    width: 300px;
+    height: 150px;
+    background-color: #333;
+    border-radius: 50% 50% 0 0;
+    position: relative;
+}
+
+.windshield {
+    width: 100px;
+    height: 50px;
+    background-color: #ccc;
+    border-radius: 50% 50% 0 0;
+    position: absolute;
+    top: 20px;
+    left: 100px;
+}
+
+.wheel {
+    width: 30px;
+    height: 30px;
+    background-color: #666;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -15px;
+}
+
+.wheel.frontLeft {
+    left: 50px;
+}
+
+.wheel.frontRight {
+    right: 50px;
+}
+
+.wheel.rearLeft {
+    left: 120px;
+}
+
+.wheel.rearRight {
+    right: 120px;
+}

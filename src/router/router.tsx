@@ -1,20 +1,27 @@
-import { createBrowserRouter } from 'react-router-dom';
-import Garage from '../views/Garage';
+import { Navigate, createBrowserRouter } from 'react-router-dom';
 import Winners from '../views/Winners';
+import { BaseRoutes } from '../models/types/config';
+import Garage from '../views/garage/Garage';
+import RootLayout from '../components/RootLayout/RootLayout';
 
-export enum BaseRoutes {
-  GarageRoute = '/garage',
-  WinnersRoute = '/winners',
-}
-
-export const router = createBrowserRouter([
+const router = createBrowserRouter([
   {
-    path: BaseRoutes.GarageRoute,
-    index: true,
-    element: <Garage />,
-  },
-  {
-    path: BaseRoutes.WinnersRoute,
-    element: <Winners />,
+    element: <RootLayout />,
+    children: [
+      {
+        path: BaseRoutes.GarageRoute,
+        element: <Garage />,
+      },
+      {
+        path: BaseRoutes.WinnersRoute,
+        element: <Winners />,
+      },
+      {
+        path: '*',
+        element: <Navigate to={BaseRoutes.GarageRoute} />,
+      },
+    ],
   },
 ]);
+
+export default router;

@@ -1,0 +1,32 @@
+.carItem {
+    display: flex;
+}
+
+.carButtons {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+.firstRow{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.secondRow{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+.trackLine{
+}
+
+@media (max-width: 600px) {
+}
+
+

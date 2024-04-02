@@ -1,0 +1,18 @@
+.trackLine {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 40px;
+    width: 100%;
+    height: 100%;
+    border: 2px cyan solid;
+    background: transparent;
+    border-radius: 15px;
+    color: rgba(57,255,20,0.5);
+}
+.lineText{
+    font-size: 40px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
