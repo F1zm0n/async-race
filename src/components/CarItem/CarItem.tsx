@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import classes from './CarItem.module.css';
-import NeonButton from '../NeonButton/NeonButton';
-import TrackLine from '../TrackLine/TrackLine';
+import NeonButton from '../UI/NeonButton/NeonButton';
+import RaceTrack from '../UI/RaceTrack/RaceTrack';
 
 // interface CarItemProps {
 //   car?: ICar;
@@ -12,19 +12,15 @@ const CarItem: FC = () => {
     <div className={classes.carItem}>
       <div className={classes.carButtons}>
         <div className={classes.firstRow}>
-          <NeonButton className={classes.selectButton}>Select</NeonButton>
-          <NeonButton className={classes.removeButton}>Remove</NeonButton>
-        </div>
-        <div className={classes.StartLine}>
-          <TrackLine className={classes.trackLine}>start</TrackLine>
+          <NeonButton className={classes.selectButton}>select</NeonButton>
+          <NeonButton className={classes.removeButton}>delete</NeonButton>
         </div>
         <div className={classes.secondRow}>
           <NeonButton className={classes.driveButton}>D</NeonButton>
           <NeonButton className={classes.parkButton}>P</NeonButton>
         </div>
       </div>
-      <div className={classes.FinishLine} />
-      <div className={classes.carTrack} />
+      <RaceTrack className={classes.carTrack}>BMW</RaceTrack>
     </div>
   );
 };

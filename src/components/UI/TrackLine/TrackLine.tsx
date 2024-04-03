@@ -1,15 +1,11 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import { FC, HTMLAttributes } from 'react';
 import classes from './TrackLine.module.css';
 
-interface TrackLineProps extends HTMLAttributes<HTMLDivElement> {
-  children: ReactNode;
-}
+interface TrackLineProps extends HTMLAttributes<HTMLDivElement> {}
 
-const TrackLine: FC<TrackLineProps> = ({ children, className, ...props }) => {
+const TrackLine: FC<TrackLineProps> = ({ className, ...props }) => {
   return (
-    <div className={[classes.trackLine, className].join(' ')} {...props}>
-      <span className={classes.lineText}>{children}</span>
-    </div>
+    <div className={[classes.startLine, className].join(' ')} {...props} />
   );
 };
 

@@ -1,38 +1,39 @@
-import classes from './CarModel.module.css';
+import { FC } from 'react';
 
-const CarModel = () => {
+interface CarModelProps {
+  color: string;
+  width: number;
+  height: number;
+}
+
+const CarModel: FC<CarModelProps> = ({ color, height, width }) => {
   return (
-    <svg className="car" viewBox="0 0 300 150">
-      <path d="M0 0h300v150H0z" fill="#333" />
-      <path className="windshield" d="M100 20h100v50H100z" fill="#ccc" />
-      <circle
-        className={[classes.wheel, classes.frontLeft].join(' ')}
-        cx="65"
-        cy="135"
-        r="15"
-        fill="#666"
-      />
-      <circle
-        className={[classes.wheel, classes.frontRight].join(' ')}
-        cx="235"
-        cy="135"
-        r="15"
-        fill="#666"
-      />
-      <circle
-        className={[classes.wheel, classes.rearLeft].join(' ')}
-        cx="135"
-        cy="135"
-        r="15"
-        fill="#666"
-      />
-      <circle
-        className={[classes.wheel, classes.rearRight].join(' ')}
-        cx="165"
-        cy="135"
-        r="15"
-        fill="#666"
-      />
+    <svg
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+      width={`${width}pt`}
+      height={`${height}pt`}
+      viewBox="0 0 1024.000000 1024.000000"
+      preserveAspectRatio="xMidYMid meet">
+      <g
+        transform="translate(0.000000,1024.000000) scale(0.100000,-0.100000)"
+        fill={color}
+        stroke="none">
+        <path
+          d="M5860 7646 c-19 -8 -50 -19 -67 -26 -18 -6 -33 -18 -33 -26 0 -13 64
+-288 76 -326 5 -17 -35 -18 -750 -18 -883 0 -954 3 -2081 77 -375 24 -1009 24
+-1205 0 -324 -41 -644 -102 -1017 -196 -302 -77 -473 -127 -502 -149 -76 -56
+-132 -181 -175 -393 -141 -694 -141 -2234 0 -2928 43 -212 99 -337 175 -393
+65 -48 797 -230 1194 -297 365 -61 434 -66 870 -65 220 0 479 6 575 12 1090
+74 1291 82 2163 82 718 0 758 -1 753 -17 -12 -37 -76 -314 -76 -326 0 -18 102
+-59 159 -65 84 -8 174 31 216 94 11 16 44 94 74 172 l54 142 546 0 546 0 71
+-29 c184 -75 363 -96 744 -88 466 10 750 70 1055 222 173 86 296 175 435 315
+309 309 483 701 557 1255 13 100 17 203 17 450 0 336 -10 457 -55 680 -62 308
+-180 594 -337 815 -86 122 -270 307 -392 393 -181 128 -432 237 -676 292 -186
+42 -325 56 -604 62 -381 8 -560 -13 -744 -88 l-71 -29 -546 0 -546 0 -54 142
+c-30 78 -63 156 -74 172 -54 80 -181 118 -275 82z"
+        />
+      </g>
     </svg>
   );
 };
