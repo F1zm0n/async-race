@@ -1,9 +1,11 @@
+// import { IEngine } from './Engine';
+
 import { IEngine } from './Engine';
 
 export interface ICar {
   name: string;
   color: string;
-  id: number;
+  id?: number;
   engine?: IEngine;
 }
 

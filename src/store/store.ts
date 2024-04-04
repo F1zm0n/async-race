@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import carApi from '../api/Car';
-import engineApi from '../api/Engine';
-import winnersApi from '../api/Winners';
+import carApi from '../api/CarApi.ts';
+import engineApi from '../api/EngineApi.ts';
+import winnersApi from '../api/WinnersApi.ts';
 
 const rootReducer = combineReducers({
   [carApi.reducerPath]: carApi.reducer,

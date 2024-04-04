@@ -1,20 +1,24 @@
 .carItem {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .carButtons {
-    display: flex;
-    gap: 3px;
-    justify-content: center;
-    align-items: center;
+    margin: 10px;
+    width:100px;
+    height:100px;
+    display:grid;
+    grid-template-columns: 40px 40px;
+    grid-row: auto;
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
 }
 .firstRow{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 5px;
 }
 
 .secondRow{
@@ -22,10 +26,9 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 5px;
 }
-.trackLine{
-
+.carTrack{
+    width: 1000px;
 }
 
 @media all and (min-width: 1024px) and (max-width: 1280px) {
@@ -36,6 +39,10 @@
 }
 
 @media all and (min-width: 480px) and (max-width: 768px) {
+    .carButtons{
+        margin: 2px;
+        margin-top: 10px;
+    }
 }
 
 
