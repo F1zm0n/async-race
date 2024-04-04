@@ -1,14 +1,11 @@
 import { FC } from 'react';
 import '../../App.css';
-import CarItem from '../../components/CarItem/CarItem';
-import CarApi from '../../api/CarApi';
+import CarList from '../../components/CarList/CarList';
 
 const Garage: FC = () => {
-  const { data: cars } = CarApi.useGetAllCarsQuery(1);
-
   return (
     <div>
-      <CarItem car={cars?.apiResponse[2]} />
+      <CarList />
     </div>
   );
 };

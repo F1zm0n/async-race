@@ -26,6 +26,7 @@ export default createApi({
           totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
         };
       },
+      providesTags: () => ['Cars'],
     }),
     createCar: build.mutation<ICarCreate, ICar>({
       query: (car) => ({
@@ -37,7 +38,7 @@ export default createApi({
     }),
     updateCar: build.mutation<ICar, ICar>({
       query: (car) => ({
-        url: `/garage${car.id}`,
+        url: `/garage/${car.id}`,
         method: 'PUT',
         body: car,
       }),
@@ -45,7 +46,7 @@ export default createApi({
     }),
     deleteCar: build.mutation<ICar, ICar>({
       query: (car) => ({
-        url: `/garage${car.id}`,
+        url: `/garage/${car.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Cars'],

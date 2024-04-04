@@ -1,7 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../models/types/config';
-import { IWinner } from '../models/api/Winners';
 import { IEngine, StartEngineParams } from '../models/api/Engine';
+
+interface ResType {
+  apiResponse: boolean;
+  code: number;
+}
 
 export default createApi({
   reducerPath: 'engineApi',
@@ -16,7 +20,7 @@ export default createApi({
         },
       }),
     }),
-    driveModeEngine: build.mutation<IWinner, number>({
+    driveModeEngine: build.mutation<ResType, number>({
       query: (id) => ({
         url: `/engine`,
         method: 'PATCH',
@@ -25,6 +29,12 @@ export default createApi({
           status: 'drive',
         },
       }),
+      transformResponse(apiResponse: boolean, meta) {
+        return {
+          code: meta?.response?.status,
+          apiResponse,
+        };
+      },
     }),
   }),
 });
