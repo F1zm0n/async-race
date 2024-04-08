@@ -1,5 +1,5 @@
 import { Navigate, createBrowserRouter } from 'react-router-dom';
-import Winners from '../views/Winners';
+import Winners from '../views/winners/Winners.tsx';
 import { BaseRoutes } from '../models/types/config';
 import Garage from '../views/garage/Garage';
 import RootLayout from '../components/RootLayout/RootLayout';
