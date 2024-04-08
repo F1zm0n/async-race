@@ -1,7 +1,7 @@
-import { FC } from 'react';
+import { FC, SVGProps } from 'react';
 import classes from './SedanCar.module.css';
 
-interface CarModelProps {
+interface CarModelProps extends SVGProps<SVGSVGElement> {
   color: string;
   // eslint-disable-next-line react/require-default-props
   width?: number;
@@ -9,10 +9,16 @@ interface CarModelProps {
   height?: number;
 }
 
-const SedanCar: FC<CarModelProps> = ({ color, width = 70, height = 30 }) => {
+const SedanCar: FC<CarModelProps> = ({
+  color,
+  width = 70,
+  height = 30,
+  ...otherProps
+}) => {
   return (
     <svg
-      className={classes.car}
+      {...otherProps}
+      className={[classes.car].join(' ')}
       viewBox="186.425 228.49 102.295 54.493"
       xmlns="http://www.w3.org/2000/svg"
       width={`${width}pt`}

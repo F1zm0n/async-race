@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import router from './router/router';
 import { setupStore } from './store/store';
+import './App.css';
 
 const store = setupStore();
 

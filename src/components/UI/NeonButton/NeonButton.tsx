@@ -1,7 +1,7 @@
-import { FC, HTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes, FC, ReactNode } from 'react';
 import classes from './NeonButton.module.css';
 
-interface NeonButtonProps extends HTMLAttributes<HTMLButtonElement> {
+interface NeonButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 

@@ -2,11 +2,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BASE_URL } from '../models/types/config';
 import { IEngine, StartEngineParams } from '../models/api/Engine';
 
-interface ResType {
-  apiResponse: boolean;
-  code: number;
-}
-
 export default createApi({
   reducerPath: 'engineApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
@@ -16,11 +11,12 @@ export default createApi({
         url: `/engine`,
         method: 'PATCH',
         params: {
-          params,
+          id: params.id,
+          status: params.status,
         },
       }),
     }),
-    driveModeEngine: build.mutation<ResType, number>({
+    driveModeEngine: build.mutation<boolean, number>({
       query: (id) => ({
         url: `/engine`,
         method: 'PATCH',
@@ -29,12 +25,6 @@ export default createApi({
           status: 'drive',
         },
       }),
-      transformResponse(apiResponse: boolean, meta) {
-        return {
-          code: meta?.response?.status,
-          apiResponse,
-        };
-      },
     }),
   }),
 });

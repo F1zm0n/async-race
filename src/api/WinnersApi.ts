@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IWinner } from '../models/api/Winners';
+import { IWinner, IWinnersGetParams } from '../models/api/Winners';
 import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
 export default createApi({
@@ -7,16 +7,30 @@ export default createApi({
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ['Winners'],
   endpoints: (build) => ({
-    getAllCars: build.query<IWinner[], number>({
-      query: (page: number = 1) => ({
+    getAllCars: build.query<IWinner[], IWinnersGetParams>({
+      query: (params: IWinnersGetParams) => ({
         url: '/winners',
         params: {
+          ...params,
           _limit: PAGINATION_LIMIT,
-          _page: page,
         },
+      }),
+      providesTags: ['Winners'],
+    }),
+    getOneCar: build.query<IWinner, number>({
+      query: (id: number) => ({
+        url: `/winners/${id}`,
       }),
     }),
     createCar: build.mutation<IWinner, IWinner>({
+      query: (winner) => ({
+        url: `/winners`,
+        method: 'POST',
+        body: winner,
+      }),
+      invalidatesTags: ['Winners'],
+    }),
+    updateCar: build.mutation<IWinner, IWinner>({
       query: (winner) => ({
         url: `/winners/${winner.id}`,
         method: 'PUT',
@@ -24,17 +38,9 @@ export default createApi({
       }),
       invalidatesTags: ['Winners'],
     }),
-    updateCar: build.mutation<IWinner, IWinner>({
-      query: (winner) => ({
-        url: `/garage${winner.id}`,
-        method: 'POST',
-        body: winner,
-      }),
-      invalidatesTags: ['Winners'],
-    }),
     deleteCar: build.mutation<IWinner, IWinner>({
       query: (winner) => ({
-        url: `/garage${winner.id}`,
+        url: `/winners/${winner.id}`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Winners'],

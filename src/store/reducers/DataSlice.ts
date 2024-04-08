@@ -1,18 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface CarCreate {
-  name: string;
-  color: string;
-}
-interface CarUpdate {
+export interface CarFormData {
   name: string;
   color: string;
 }
 
 interface DataState {
   selectedCarID: number;
-  carCreate: CarCreate;
-  carUpdate: CarUpdate;
+  carCreate: CarFormData;
+  carUpdate: CarFormData;
+  allCarsStarted: boolean;
 }
 
 const initialState: DataState = {
@@ -25,6 +22,7 @@ const initialState: DataState = {
     name: '',
     color: '',
   },
+  allCarsStarted: false,
 };
 
 export const DataSlice = createSlice({
@@ -34,11 +32,14 @@ export const DataSlice = createSlice({
     setSelectedCarID(state, action: PayloadAction<number>) {
       state.selectedCarID = action.payload;
     },
-    setCarCreate(state, action: PayloadAction<CarCreate>) {
+    setCarCreate(state, action: PayloadAction<CarFormData>) {
       state.carCreate = action.payload;
     },
-    setCarUpdate(state, action: PayloadAction<CarUpdate>) {
+    setCarUpdate(state, action: PayloadAction<CarFormData>) {
       state.carUpdate = action.payload;
+    },
+    setAllCarsStarted(state, action: PayloadAction<boolean>) {
+      state.allCarsStarted = action.payload;
     },
   },
 });

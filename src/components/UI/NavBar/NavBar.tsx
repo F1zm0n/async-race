@@ -1,47 +1,27 @@
 import { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import classes from './NavBar.module.css';
-import { BaseRoutes } from '../../../models/types/config';
 
 const NavBar: FC = () => {
-  const [isActive, setIsActive] = useState(false);
-  // add the active class
-  const toggleActiveClass = () => {
-    setIsActive(!isActive);
-  };
-  // clean up function to remove the active class
-  const removeActive = () => {
-    setIsActive(false);
-  };
-
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <nav className={classes.navbar}>
-      {/* logo */}
-      <NavLink to={BaseRoutes.GarageRoute} className={classes.logo}>
+    <nav className={classes.nav}>
+      <Link to="/" className={classes.title}>
         Async-Race
-      </NavLink>
-      <ul
-        className={[classes.navMenu, isActive ? classes.active : ''].join(' ')}>
-        <li onClick={removeActive}>
-          <NavLink to={BaseRoutes.GarageRoute} className={classes.navLink}>
-            Garage
-          </NavLink>
+      </Link>
+      <div className={classes.menu} onClick={() => setMenuOpen(!menuOpen)}>
+        <span />
+        <span />
+        <span />
+      </div>
+      <ul className={menuOpen ? classes.open : ''}>
+        <li>
+          <NavLink to="/garage">Garage</NavLink>
         </li>
-        <li onClick={removeActive}>
-          <NavLink to={BaseRoutes.WinnersRoute} className={classes.navLink}>
-            Winners
-          </NavLink>
+        <li>
+          <NavLink to="/winners">Winners</NavLink>
         </li>
       </ul>
-      <div
-        className={[classes.hamburger, isActive ? classes.active : ''].join(
-          ' ',
-        )}
-        onClick={toggleActiveClass}>
-        <span className={classes.bar} />
-        <span className={classes.bar} />
-        <span className={classes.bar} />
-      </div>
     </nav>
   );
 };

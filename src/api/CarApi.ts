@@ -28,6 +28,11 @@ export default createApi({
       },
       providesTags: () => ['Cars'],
     }),
+    getOneCar: build.query<ICar, number>({
+      query: (id: number) => ({
+        url: `/garage/${id}`,
+      }),
+    }),
     createCar: build.mutation<ICarCreate, ICar>({
       query: (car) => ({
         url: '/garage',
