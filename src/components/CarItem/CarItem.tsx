@@ -1,4 +1,4 @@
-import { createRef, FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import classes from './CarItem.module.css';
 import NeonButton from '../UI/NeonButton/NeonButton';
 import RaceTrack from '../UI/RaceTrack/RaceTrack';
@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { DataSlice } from '../../store/reducers/DataSlice';
 import { IEngine } from '../../models/api/Engine';
 import WinnersApi from '../../api/WinnersApi';
+import useOffsetWidth from '../../hooks/useOffsetWidth.ts';
 
 interface CarItemProps {
   car: ICar;
@@ -23,39 +24,16 @@ const CarItem: FC<CarItemProps> = ({ car }) => {
   const dispatch = useAppDispatch();
   const dataState = useAppSelector((state) => state.DataReducer);
   const { setSelectedCarID } = DataSlice.actions;
-  const raceTrackRef = createRef<HTMLDivElement>();
+  const raceTrackRef = useRef<HTMLDivElement>();
   const [isStarted, setIsStarted] = useState(false);
   const [duration, setDuration] = useState(3);
-  const [offsetWidth, setOffsetWidth] = useState(0);
   const deleteMyCar = (myCar: ICar) => {
     deleteCar(myCar);
   };
   const selectCar = (id: number) => {
     dispatch(setSelectedCarID(id));
   };
-  // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    if (raceTrackRef.current) {
-      setOffsetWidth(raceTrackRef.current?.offsetWidth);
-      const resizeObserver = new ResizeObserver((entries) => {
-        // eslint-disable-next-line no-restricted-syntax
-        for (const entry of entries) {
-          // Update the width when the size changes
-          setOffsetWidth(entry.contentRect.width + 30);
-        }
-      });
-
-      // Observe the target element
-      if (raceTrackRef.current) {
-        resizeObserver.observe(raceTrackRef.current);
-        // Set initial width
-        setOffsetWidth(raceTrackRef.current.clientWidth + 30);
-      }
-      return () => {
-        resizeObserver.disconnect();
-      };
-    }
-  }, []);
+  const offsetWidth = useOffsetWidth(raceTrackRef);
 
   const startEngine = () => {
     fetch(`http://localhost:3000/engine?id=${car.id}&status=started`, {
