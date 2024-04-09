@@ -11,24 +11,24 @@ import WinnersApi from '../../api/WinnersApi';
 import { OrderParams, SortParams } from '../../models/api/Winners';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { WinnersSlice } from '../../store/reducers/WinnersSlice';
+import { DataSlice } from '../../store/reducers/DataSlice';
 import classes from './Winners.module.css';
 
 const Winners: FC = () => {
   // rtk
+  const dataState = useAppSelector((state) => state.DataReducer);
   const winnersState = useAppSelector((state) => state.WinnersReducer);
   const dispatch = useAppDispatch();
   const { setPage } = WinnersSlice.actions;
+  const { setSelectedOrder, setSelectedSort } = DataSlice.actions;
   // states
-  const [sort, setSort] = useState('');
-  const [order, setOrder] = useState('');
   // queries
   const { data } = WinnersApi.useGetAllCarsQuery({
     _limit: 7,
-    _sort: sort as SortParams | undefined,
-    _order: order as OrderParams | undefined,
+    _sort: dataState.selectedSort as SortParams | undefined,
+    _order: dataState.selectedOrder as OrderParams | undefined,
     _page: winnersState.page,
   });
-
   // functions
   const dispatchPage = (page: number) => {
     dispatch(setPage(page));
@@ -39,14 +39,18 @@ const Winners: FC = () => {
         <SelectSort
           options={sortOptions}
           defaultValue="choose sort"
-          value={sort}
-          onChange={setSort}
+          value={dataState.selectedSort as string}
+          onChange={(sort: string) =>
+            dispatch(setSelectedSort(sort as SortParams))
+          }
         />
         <SelectSort
           options={orderOptions}
           defaultValue="choose sort"
-          value={order}
-          onChange={setOrder}
+          value={dataState.selectedOrder}
+          onChange={(order: string) =>
+            dispatch(setSelectedOrder(order as OrderParams))
+          }
         />
       </div>
       <WinnerList data={data?.apiResponse} />

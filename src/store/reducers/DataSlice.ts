@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { OrderParams, SortParams } from '../../models/api/Winners';
 
 export interface CarFormData {
   name: string;
@@ -10,6 +11,8 @@ interface DataState {
   carCreate: CarFormData;
   carUpdate: CarFormData;
   allCarsStarted: boolean;
+  selectedSort: SortParams | '';
+  selectedOrder: OrderParams | '';
 }
 
 const initialState: DataState = {
@@ -22,6 +25,8 @@ const initialState: DataState = {
     name: '',
     color: '',
   },
+  selectedSort: '',
+  selectedOrder: '',
   allCarsStarted: false,
 };
 
@@ -40,6 +45,12 @@ export const DataSlice = createSlice({
     },
     setAllCarsStarted(state, action: PayloadAction<boolean>) {
       state.allCarsStarted = action.payload;
+    },
+    setSelectedSort(state, action: PayloadAction<SortParams>) {
+      state.selectedSort = action.payload;
+    },
+    setSelectedOrder(state, action: PayloadAction<OrderParams>) {
+      state.selectedOrder = action.payload;
     },
   },
 });
