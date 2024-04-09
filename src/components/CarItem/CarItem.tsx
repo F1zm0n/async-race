@@ -1,4 +1,5 @@
 import { FC, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
 import classes from './CarItem.module.css';
 import NeonButton from '../UI/NeonButton/NeonButton';
 import RaceTrack from '../UI/RaceTrack/RaceTrack';
@@ -7,36 +8,34 @@ import SedanCar from '../UI/SedanCar/SedanCar';
 import { useAppSelector } from '../../hooks/redux';
 import WinnersApi from '../../api/WinnersApi';
 import useOffsetWidth from '../../hooks/useOffsetWidth';
-import { IWinner } from '../../models/api/Winners';
 
 interface CarItemProps {
   car: ICar;
   deleteCar: (myCar: ICar) => void;
   selectCar: (id: number) => void;
-  startEngine: (
-    car: ICar,
-    setDuration: (duration: number) => void,
-    setIsStarted: (isStarted: boolean) => void,
-    isWinnerExists: boolean,
-    winnerData: IWinner,
-  ) => void;
-  stopEngine: (
-    car: ICar,
-    setDuration: (duration: number) => void,
-    setIsStarted: (isStarted: boolean) => void,
-  ) => void;
+  // startEngine: (
+  //   car: ICar,
+  //   setDuration: (duration: number) => void,
+  //   setIsStarted: (isStarted: boolean) => void,
+  //   isWinnerExists: boolean,
+  //   winnerData: IWinner,
+  // ) => void;
+  // stopEngine: (
+  //   car: ICar,
+  //   setDuration: (duration: number) => void,
+  //   setIsStarted: (isStarted: boolean) => void,
+  // ) => void;
 }
 
-const CarItem: FC<CarItemProps> = ({
-  car,
-  selectCar,
-  deleteCar,
-  stopEngine,
-  startEngine,
-}) => {
+const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
+  // queries
   const { data: winnerData, isSuccess: isWinnerExists } =
     WinnersApi.useGetOneCarQuery(car.id!);
+  const [createWinner] = WinnersApi.useCreateCarMutation();
+  const [updateWinner] = WinnersApi.useUpdateCarMutation();
+  // rtk
   const dataState = useAppSelector((state) => state.DataReducer);
+  // state
   const raceTrackRef = useRef<HTMLDivElement>();
   const [isStarted, setIsStarted] = useState(false);
   const [duration, setDuration] = useState(3);
@@ -53,11 +52,51 @@ const CarItem: FC<CarItemProps> = ({
     },
   };
 
+  const startEngine = async () => {
+    try {
+      const res = await axios.patch(
+        `http://localhost:3000/engine?id=${car.id}&status=started`,
+      );
+      const startDat = res.data;
+      setDuration(startDat.distance / startDat.velocity / 1000);
+      setIsStarted(true);
+      if (isWinnerExists) {
+        updateWinner({
+          wins: winnerData.apiResponse.wins! + 1,
+          time: startDat.distance / startDat.velocity / 1000,
+          id: car.id as number,
+        });
+      } else {
+        createWinner({
+          id: car.id as number,
+          time: startDat.distance / startDat.velocity / 1000,
+          wins: 1,
+        });
+      }
+    } catch (error) {
+      setDuration(0);
+      setIsStarted(false);
+    }
+  };
+
+  const stopEngine = async () => {
+    try {
+      await axios.patch(
+        `http://localhost:3000/engine?id=${car.id}&status=stopped`,
+      );
+      setDuration(0);
+      setIsStarted(false);
+    } catch (error) {
+      setDuration(0);
+      setIsStarted(false);
+    }
+  };
+
   useEffect(() => {
     if (dataState.allCarsStarted) {
-      startEngine(car, setDuration, setIsStarted, isWinnerExists, winnerData!);
+      startEngine();
     } else {
-      stopEngine(car, setDuration, setIsStarted);
+      stopEngine();
     }
   }, [dataState.allCarsStarted]);
 
@@ -74,21 +113,8 @@ const CarItem: FC<CarItemProps> = ({
         <NeonButton onClick={() => deleteCar(car)}>
           <i className="fa-solid fa-trash" />
         </NeonButton>
-        <NeonButton
-          onClick={() =>
-            startEngine(
-              car,
-              setDuration,
-              setIsStarted,
-              isWinnerExists,
-              winnerData!,
-            )
-          }>
-          D
-        </NeonButton>
-        <NeonButton onClick={() => stopEngine(car, setDuration, setIsStarted)}>
-          P
-        </NeonButton>
+        <NeonButton onClick={() => startEngine()}>D</NeonButton>
+        <NeonButton onClick={() => stopEngine()}>P</NeonButton>
         <div />
       </div>
       {/* <CSSTransition in={isStarted} timeout={10000} classNames="car"> */}

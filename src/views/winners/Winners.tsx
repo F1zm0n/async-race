@@ -1,14 +1,17 @@
 import { FC, useState } from 'react';
 import WinnerList from '../../components/WinnerList/WinnerList';
-import SelectSort, {
-  SortOptions,
-} from '../../components/UI/SelectSort/SelectSort';
+import SelectSort from '../../components/UI/SelectSort/SelectSort';
 import MyPagination from '../../components/MyPagination/MyPagination';
-import { PAGINATION_LIMIT } from '../../models/types/config';
+import {
+  orderOptions,
+  PAGINATION_LIMIT,
+  sortOptions,
+} from '../../models/types/config';
 import WinnersApi from '../../api/WinnersApi';
 import { OrderParams, SortParams } from '../../models/api/Winners';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { WinnersSlice } from '../../store/reducers/WinnersSlice';
+import classes from './Winners.module.css';
 
 const Winners: FC = () => {
   // rtk
@@ -25,23 +28,27 @@ const Winners: FC = () => {
     _order: order as OrderParams | undefined,
     _page: winnersState.page,
   });
-  const sortOptions: SortOptions[] = [
-    { name: 'id', value: 'id' },
-    { name: 'wins', value: 'wins' },
-    { name: 'time', value: 'time' },
-  ];
+
   // functions
   const dispatchPage = (page: number) => {
     dispatch(setPage(page));
   };
   return (
     <div>
-      <SelectSort
-        options={sortOptions}
-        defaultValue="choose sort"
-        value={sort}
-        onChange={setSort}
-      />
+      <div className={classes.selections}>
+        <SelectSort
+          options={sortOptions}
+          defaultValue="choose sort"
+          value={sort}
+          onChange={setSort}
+        />
+        <SelectSort
+          options={orderOptions}
+          defaultValue="choose sort"
+          value={order}
+          onChange={setOrder}
+        />
+      </div>
       <WinnerList data={data?.apiResponse} />
       <MyPagination
         page={winnersState.page}

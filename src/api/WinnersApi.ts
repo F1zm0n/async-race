@@ -6,6 +6,10 @@ export interface ResType {
   apiResponse: IWinner[];
   totalCount: number;
 }
+interface GetOneWinner {
+  apiResponse: IWinner;
+  status: number | undefined;
+}
 
 export default createApi({
   reducerPath: 'winnersApi',
@@ -28,13 +32,16 @@ export default createApi({
       },
       providesTags: ['Winners'],
     }),
-    getOneCar: build.query<IWinner, number>({
+    getOneCar: build.query<GetOneWinner, number>({
       query: (id: number) => ({
-        url: `/winners`,
-        params: {
-          id,
-        },
+        url: `/winners/${id}`,
       }),
+      transformResponse(apiResponse: IWinner, meta) {
+        return {
+          apiResponse,
+          status: meta?.response?.status,
+        };
+      },
     }),
     createCar: build.mutation<IWinner, IWinner>({
       query: (winner) => ({

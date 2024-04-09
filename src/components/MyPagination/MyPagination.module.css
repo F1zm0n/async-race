@@ -1,13 +1,14 @@
 .pagination {
     display: flex;
-    width: 200px;
+    width: 150px;
 }
 .switchPage{
     color: black;
     transition: background-color .3s;
     border: 1px solid #ddd;
     background: transparent;
-    width: 50px;
+    max-width: 50px;
+    text-align: center;
 }
 .switchPage:hover{
     background-color: teal;;
@@ -15,7 +16,10 @@
 }
 .pageNumber{
     color: black;
+    font-size: 20px ;
     border: 1px solid #ddd;
+    border-radius: 5px;
     background: transparent;
     padding: 20px;
+    text-align: center;
 }

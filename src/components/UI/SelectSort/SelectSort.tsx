@@ -1,10 +1,6 @@
 import { FC } from 'react';
 import classes from './SelectSort.module.css';
-
-export interface SortOptions {
-  name: string;
-  value: string;
-}
+import { SortOptions } from '../../../models/types/config';
 
 interface SelectSortProps {
   options: SortOptions[];

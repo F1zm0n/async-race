@@ -17,7 +17,10 @@ const WinnerList: FC<WinnerListProps> = ({ data }) => {
         <div>Wins</div>
         <div>Time(S)</div>
       </div>
-      {data && data.map((w) => <WinnerItem key={w.id} winner={w} />)}
+      {data &&
+        data.map((w) => (
+          <WinnerItem key={w.id} className={classes.winner__item} winner={w} />
+        ))}
     </div>
   );
 };
