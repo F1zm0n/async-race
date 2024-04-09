@@ -8,7 +8,7 @@ const initialState: WinnersState = {
   page: 1,
 };
 
-export default createSlice({
+export const WinnersSlice = createSlice({
   name: 'winnersSlice',
   initialState,
   reducers: {
@@ -17,3 +17,5 @@ export default createSlice({
     },
   },
 });
+
+export default WinnersSlice.reducer;

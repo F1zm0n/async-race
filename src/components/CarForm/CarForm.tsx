@@ -13,7 +13,9 @@ interface CarFormProps {
 const CarForm: FC<CarFormProps> = ({ buttonText, storageKey, createCar }) => {
   const [car, setCar] = useState({ name: '', color: '' });
   useEffect(() => {
-    setCar(JSON.parse(localStorage.getItem(storageKey) as string));
+    if (localStorage.getItem(storageKey)) {
+      setCar(JSON.parse(localStorage.getItem(storageKey)!));
+    }
   }, []);
 
   const handleName = (e: ChangeEvent<HTMLInputElement>) => {

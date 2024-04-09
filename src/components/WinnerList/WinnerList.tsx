@@ -1,9 +1,13 @@
-import WinnersApi from '../../api/WinnersApi';
+import { FC } from 'react';
 import WinnerItem from '../WinnerItem/WinnerItem';
 import classes from './WinnerList.module.css';
+import { IWinner } from '../../models/api/Winners';
 
-const WinnerList = () => {
-  const { data, isSuccess } = WinnersApi.useGetAllCarsQuery({});
+interface WinnerListProps {
+  data: IWinner[] | undefined;
+}
+
+const WinnerList: FC<WinnerListProps> = ({ data }) => {
   return (
     <div>
       <div className={classes.things}>
@@ -13,7 +17,7 @@ const WinnerList = () => {
         <div>Wins</div>
         <div>Time(S)</div>
       </div>
-      {isSuccess && data?.apiResponse?.map((w) => <WinnerItem winner={w} />)}
+      {data && data.map((w) => <WinnerItem key={w.id} winner={w} />)}
     </div>
   );
 };

@@ -30,7 +30,10 @@ export default createApi({
     }),
     getOneCar: build.query<IWinner, number>({
       query: (id: number) => ({
-        url: `/winners/${id}`,
+        url: `/winners`,
+        params: {
+          id,
+        },
       }),
     }),
     createCar: build.mutation<IWinner, IWinner>({

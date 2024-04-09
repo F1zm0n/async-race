@@ -4,78 +4,44 @@ import NeonButton from '../UI/NeonButton/NeonButton';
 import RaceTrack from '../UI/RaceTrack/RaceTrack';
 import { ICar } from '../../models/api/Car';
 import SedanCar from '../UI/SedanCar/SedanCar';
-import CarApi from '../../api/CarApi';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { DataSlice } from '../../store/reducers/DataSlice';
-import { IEngine } from '../../models/api/Engine';
+import { useAppSelector } from '../../hooks/redux';
 import WinnersApi from '../../api/WinnersApi';
-import useOffsetWidth from '../../hooks/useOffsetWidth.ts';
+import useOffsetWidth from '../../hooks/useOffsetWidth';
+import { IWinner } from '../../models/api/Winners';
 
 interface CarItemProps {
   car: ICar;
+  deleteCar: (myCar: ICar) => void;
+  selectCar: (id: number) => void;
+  startEngine: (
+    car: ICar,
+    setDuration: (duration: number) => void,
+    setIsStarted: (isStarted: boolean) => void,
+    isWinnerExists: boolean,
+    winnerData: IWinner,
+  ) => void;
+  stopEngine: (
+    car: ICar,
+    setDuration: (duration: number) => void,
+    setIsStarted: (isStarted: boolean) => void,
+  ) => void;
 }
 
-const CarItem: FC<CarItemProps> = ({ car }) => {
-  const [deleteCar] = CarApi.useDeleteCarMutation();
-  const [createWinner] = WinnersApi.useCreateCarMutation();
-  const [updateWinner] = WinnersApi.useUpdateCarMutation();
+const CarItem: FC<CarItemProps> = ({
+  car,
+  selectCar,
+  deleteCar,
+  stopEngine,
+  startEngine,
+}) => {
   const { data: winnerData, isSuccess: isWinnerExists } =
-    WinnersApi.useGetOneCarQuery(car.id as number);
-  const dispatch = useAppDispatch();
+    WinnersApi.useGetOneCarQuery(car.id!);
   const dataState = useAppSelector((state) => state.DataReducer);
-  const { setSelectedCarID } = DataSlice.actions;
   const raceTrackRef = useRef<HTMLDivElement>();
   const [isStarted, setIsStarted] = useState(false);
   const [duration, setDuration] = useState(3);
-  const deleteMyCar = (myCar: ICar) => {
-    deleteCar(myCar);
-  };
-  const selectCar = (id: number) => {
-    dispatch(setSelectedCarID(id));
-  };
   const offsetWidth = useOffsetWidth(raceTrackRef);
 
-  const startEngine = () => {
-    fetch(`http://localhost:3000/engine?id=${car.id}&status=started`, {
-      method: 'PATCH',
-    })
-      .then((res) => res.json())
-      .then((startDat: IEngine) => {
-        setDuration(startDat.distance / startDat.velocity / 1000);
-        setIsStarted(true);
-        if (isWinnerExists) {
-          updateWinner({
-            wins: winnerData.wins + 1,
-            time: startDat.distance / startDat.velocity / 1000,
-            id: car.id as number,
-          });
-        } else {
-          createWinner({
-            id: car.id as number,
-            time: startDat.distance / startDat.velocity / 1000,
-            wins: 1,
-          });
-        }
-      })
-      .catch(() => {
-        setDuration(0);
-        setIsStarted(false);
-      });
-  };
-  const stopEngine = () => {
-    fetch(`http://localhost:3000/engine?id=${car.id}&status=stopped`, {
-      method: 'PATCH',
-    })
-      .then((res) => res.json())
-      .then(() => {
-        setDuration(0);
-        setIsStarted(false);
-      })
-      .catch(() => {
-        setDuration(0);
-        setIsStarted(false);
-      });
-  };
   const carStyles = {
     carTurned: {
       transition: `transform ${duration}s ease-in`,
@@ -89,9 +55,9 @@ const CarItem: FC<CarItemProps> = ({ car }) => {
 
   useEffect(() => {
     if (dataState.allCarsStarted) {
-      startEngine();
+      startEngine(car, setDuration, setIsStarted, isWinnerExists, winnerData!);
     } else {
-      stopEngine();
+      stopEngine(car, setDuration, setIsStarted);
     }
   }, [dataState.allCarsStarted]);
 
@@ -105,11 +71,24 @@ const CarItem: FC<CarItemProps> = ({ car }) => {
           onClick={() => selectCar(car.id as number)}>
           <i className="fa-solid fa-hand-pointer" />
         </NeonButton>
-        <NeonButton onClick={() => deleteMyCar(car)}>
+        <NeonButton onClick={() => deleteCar(car)}>
           <i className="fa-solid fa-trash" />
         </NeonButton>
-        <NeonButton onClick={() => startEngine()}>D</NeonButton>
-        <NeonButton onClick={() => stopEngine()}>P</NeonButton>
+        <NeonButton
+          onClick={() =>
+            startEngine(
+              car,
+              setDuration,
+              setIsStarted,
+              isWinnerExists,
+              winnerData!,
+            )
+          }>
+          D
+        </NeonButton>
+        <NeonButton onClick={() => stopEngine(car, setDuration, setIsStarted)}>
+          P
+        </NeonButton>
         <div />
       </div>
       {/* <CSSTransition in={isStarted} timeout={10000} classNames="car"> */}

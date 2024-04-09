@@ -22,5 +22,5 @@ export interface IWinnersGetParams {
   _order?: OrderParams;
 }
 
-type SortParams = 'id' | 'wins' | 'time';
-type OrderParams = 'ASC' | 'DESC';
+export type SortParams = 'id' | 'wins' | 'time';
+export type OrderParams = 'ASC' | 'DESC';
