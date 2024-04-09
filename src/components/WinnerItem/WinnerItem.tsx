@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import CarApi from '../../api/CarApi';
-import classes from './WinnersItem.module.css';
+import classes from './WinnerItem.module.css';
 import SedanCar from '../UI/SedanCar/SedanCar';
 import { IWinner } from '../../models/api/Winners';
 
@@ -8,7 +8,7 @@ interface WinnersItemProps {
   winner: IWinner;
 }
 
-const WinnersItem: FC<WinnersItemProps> = ({ winner }) => {
+const WinnerItem: FC<WinnersItemProps> = ({ winner }) => {
   const { data } = CarApi.useGetOneCarQuery(winner.id);
   return (
     <div
@@ -23,4 +23,4 @@ const WinnersItem: FC<WinnersItemProps> = ({ winner }) => {
   );
 };
 
-export default WinnersItem;
+export default WinnerItem;

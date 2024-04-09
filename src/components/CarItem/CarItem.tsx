@@ -33,10 +33,12 @@ const CarItem: FC<CarItemProps> = ({ car }) => {
   const selectCar = (id: number) => {
     dispatch(setSelectedCarID(id));
   };
+  // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (raceTrackRef.current) {
       setOffsetWidth(raceTrackRef.current?.offsetWidth);
       const resizeObserver = new ResizeObserver((entries) => {
+        // eslint-disable-next-line no-restricted-syntax
         for (const entry of entries) {
           // Update the width when the size changes
           setOffsetWidth(entry.contentRect.width + 30);
@@ -137,6 +139,7 @@ const CarItem: FC<CarItemProps> = ({ car }) => {
         style={isStarted ? carStyles.carTurned : carStyles.carOff}
         color={car?.color}
       />
+      {/* @ts-ignore */}
       <RaceTrack ref={raceTrackRef} className={classes.carTrack}>
         BMW
       </RaceTrack>

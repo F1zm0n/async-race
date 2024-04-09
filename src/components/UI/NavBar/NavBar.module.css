@@ -36,6 +36,14 @@
     margin: 0 0.5rem;
     border-radius: 0.5rem;
 }
+.nav ul li div {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    border-radius: 0.5rem;
+}
 
 .nav ul li a:not(.active):hover {
     background-color:#172554 ;
@@ -85,8 +93,16 @@
         width: 100%;
         text-align: center;
     }
+    .nav ul div {
+        width: 100%;
+        text-align: center;
+    }
+
 
     .nav ul li a {
+        margin: 0.2rem 0.5rem;
+    }
+    .nav ul li div {
         margin: 0.2rem 0.5rem;
     }
 }

@@ -2,12 +2,17 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IWinner, IWinnersGetParams } from '../models/api/Winners';
 import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
+interface ResType {
+  apiResponse: IWinner[];
+  totalCount: number;
+}
+
 export default createApi({
   reducerPath: 'winnersApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   tagTypes: ['Winners'],
   endpoints: (build) => ({
-    getAllCars: build.query<IWinner[], IWinnersGetParams>({
+    getAllCars: build.query<ResType, IWinnersGetParams>({
       query: (params: IWinnersGetParams) => ({
         url: '/winners',
         params: {
@@ -15,6 +20,12 @@ export default createApi({
           _limit: PAGINATION_LIMIT,
         },
       }),
+      transformResponse(apiResponse: IWinner[], meta) {
+        return {
+          apiResponse,
+          totalCount: Number(meta?.response?.headers.get('X-Total-Count')),
+        };
+      },
       providesTags: ['Winners'],
     }),
     getOneCar: build.query<IWinner, number>({

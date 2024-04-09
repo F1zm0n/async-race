@@ -1,9 +1,10 @@
 import { FC } from 'react';
+import WinnerList from '../../components/WinnerList/WinnerList';
 
 const Winners: FC = () => {
   return (
     <div>
-      <div />
+      <WinnerList />
     </div>
   );
 };

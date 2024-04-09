@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import CarItem from '../CarItem/CarItem';
 import CarApi from '../../api/CarApi';
 import { ICar } from '../../models/api/Car';
@@ -11,7 +11,7 @@ import GenerateCars from '../../utils/GenerateCars';
 import MyPagination from '../MyPagination/MyPagination';
 import { PAGINATION_LIMIT } from '../../models/types/config';
 import WinnersApi from '../../api/WinnersApi';
-import WinnerBanner from '../UI/WinnerBanner/WinnerBanner.tsx';
+import WinnerBanner from '../UI/WinnerBanner/WinnerBanner';
 
 const CarList: FC = () => {
   const [createCar] = CarApi.useCreateCarMutation();
@@ -27,7 +27,6 @@ const CarList: FC = () => {
   const { setSelectedCarID, setCarCreate, setAllCarsStarted } =
     DataSlice.actions;
   const { data } = CarApi.useGetAllCarsQuery(carsState.page);
-  const [showWinner, setShowWinner] = useState(true);
 
   const updateFormCar = (car: ICar) => {
     car.id = dataState.selectedCarID;
@@ -41,9 +40,6 @@ const CarList: FC = () => {
   };
   const startAllCars = () => {
     dispatch(setAllCarsStarted(false));
-    setTimeout(() => {
-      setShowWinner(true);
-    }, 5000);
   };
   return (
     <div className={classes.wrapper}>
@@ -78,7 +74,7 @@ const CarList: FC = () => {
         return <CarItem key={car.id} car={car} />;
       })}
       <div className={classes.footer}>
-        {isSuccess && <WinnerBanner winner={winners[0]} />}
+        {isSuccess && <WinnerBanner winner={winners.apiResponse[0]} />}
         <MyPagination
           maxPage={Math.ceil((data?.totalCount as number) / PAGINATION_LIMIT)}
         />
