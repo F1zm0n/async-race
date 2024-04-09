@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IWinner, IWinnersGetParams } from '../models/api/Winners';
 import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
-interface ResType {
+export interface ResType {
   apiResponse: IWinner[];
   totalCount: number;
 }

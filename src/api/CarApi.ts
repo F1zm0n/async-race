@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ICar, ICarCreate } from '../models/api/Car';
 import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
 
-interface ResType {
+export interface ResType {
   apiResponse: ICar[];
   totalCount: number;
 }

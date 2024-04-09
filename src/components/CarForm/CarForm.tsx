@@ -29,6 +29,7 @@ const CarForm: FC<CarFormProps> = ({ buttonText, storageKey, createCar }) => {
     e.preventDefault();
     createCar(car);
     setCar({ name: '', color: '' });
+    localStorage.removeItem(storageKey);
   };
 
   return (
