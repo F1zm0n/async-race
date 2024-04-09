@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
 
     display: grid;
     grid-template-rows: 1fr;
@@ -10,4 +10,5 @@
     color: white;
     font-weight: bold;
     padding: 20px;
+    position: absolute;
 }

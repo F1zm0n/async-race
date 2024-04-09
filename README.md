@@ -1,3 +1,7 @@
+## Lnk to deployed UI
+
+
+
 ## Checklist
 
 ## 🚀 UI Deployment
@@ -6,19 +10,19 @@
 
 ## ✅ Requirements to Commits and Repository
 
-- [ ] **Commit guidelines compliance:** Ensure that all commits follow the specified commit guidelines, thereby promoting a clear and consistent commit history. This includes using meaningful commit messages that accurately describe the changes made.
+- [x] **Commit guidelines compliance:** Ensure that all commits follow the specified commit guidelines, thereby promoting a clear and consistent commit history. This includes using meaningful commit messages that accurately describe the changes made.
 
-- [ ] **Checklist included in README.md:** Include the project's checklist in the README.md file. Mark all implemented features to provide a clear overview of the project's completion status.
+- [x] **Checklist included in README.md:** Include the project's checklist in the README.md file. Mark all implemented features to provide a clear overview of the project's completion status.
 
-- [ ] **Score calculation:** Use this checklist to calculate your score. Check all implemented features, then calculate your score and put it at the top of the `README.md`.
+- [x] **Score calculation:** Use this checklist to calculate your score. Check all implemented features, then calculate your score and put it at the top of the `README.md`.
 
-- [ ] **UI Deployment link in README.md**: Place the link to the deployed UI at the top of the README.md file, alongside the calculated score.
+- [x] **UI Deployment link in README.md**: Place the link to the deployed UI at the top of the README.md file, alongside the calculated score.
 
 ## 🏁 Basic Structure (85 points)
 
 ### 1. View Configuration (30 points)
 
-- [ ] **Two Views (10 points):** Implement two primary views: "Garage" and "Winners".
+- [x] **Two Views (10 points):** Implement two primary views: "Garage" and "Winners".
 - [ ] **Garage View Content (5 points):** The "Garage" view must display its name, the current page number, and the total number of cars in the database (how many car user has in his garage).
 - [ ] **Winners View Content (5 points):** The "Winners" view should similarly display its name, the current page number, and the total count of records in the database (how many records the winners table contains).
 - [ ] **Persistent State (10 points):** Ensure the view state remains consistent when navigating between views. This includes preserving page numbers and input states. For example, page number shouldn't be reset, input controls should contain that they contained before switching, etc.

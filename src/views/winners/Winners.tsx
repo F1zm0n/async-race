@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import WinnerList from '../../components/WinnerList/WinnerList';
 import SelectSort from '../../components/UI/SelectSort/SelectSort';
 import MyPagination from '../../components/MyPagination/MyPagination';

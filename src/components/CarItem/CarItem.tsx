@@ -121,9 +121,10 @@ const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
       <SedanCar
         style={isStarted ? carStyles.carTurned : carStyles.carOff}
         color={car?.color}
+        className={classes.animationItem}
       />
       {/* @ts-ignore */}
-      <RaceTrack ref={raceTrackRef} className={classes.carTrack}>
+      <RaceTrack car={car} ref={raceTrackRef} className={classes.carTrack}>
         BMW
       </RaceTrack>
     </div>

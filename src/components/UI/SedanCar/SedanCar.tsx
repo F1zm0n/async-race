@@ -13,12 +13,13 @@ const SedanCar: FC<CarModelProps> = ({
   color,
   width = 70,
   height = 30,
+  className,
   ...otherProps
 }) => {
   return (
     <svg
       {...otherProps}
-      className={[classes.car].join(' ')}
+      className={[classes.car, className].join(' ')}
       viewBox="186.425 228.49 102.295 54.493"
       xmlns="http://www.w3.org/2000/svg"
       width={`${width}pt`}

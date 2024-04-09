@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .carButtons {
@@ -31,12 +32,13 @@
     width: 1000px;
 }
 
-@media all and (min-width: 1024px) and (max-width: 1280px) {
 
+.animationItem {
+    position: relative;
+    z-index: 1000;
 }
 
-@media all and (min-width: 768px) and (max-width: 1024px) {
-}
+
 
 @media all and (min-width: 480px) and (max-width: 768px) {
     .carButtons{
