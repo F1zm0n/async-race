@@ -13,6 +13,7 @@ import { DataSlice } from '../../store/reducers/DataSlice';
 import { ICar } from '../../models/api/Car';
 import { carsSlice } from '../../store/reducers/CarsSlice';
 import ModalWindow from '../../components/UI/ModalWindow/ModalWindow';
+import SedanCar from '../../components/UI/SedanCar/SedanCar';
 
 const Garage: FC = () => {
   // rtk
@@ -23,7 +24,7 @@ const Garage: FC = () => {
   const { setSelectedCarID, setCarCreate, setAllCarsStarted } =
     DataSlice.actions;
   // states
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   // queries
   const { data } = CarApi.useGetAllCarsQuery(carsState.page);
   const [createCar] = CarApi.useCreateCarMutation();
@@ -33,9 +34,14 @@ const Garage: FC = () => {
     _order: 'ASC',
     _sort: 'time',
   });
+  const { data: winnerCar, isSuccess: isCarFound } = CarApi.useGetOneCarQuery(
+    isSuccess ? winners.apiResponse[0].id : 0,
+  );
   // functions
+
   const dispatchPage = (page: number) => {
     dispatch(setPage(page));
+    dispatch(setAllCarsStarted(false));
   };
   const updateFormCar = (car: ICar) => {
     car.id = dataState.selectedCarID;
@@ -51,12 +57,22 @@ const Garage: FC = () => {
   };
   const startAllCars = () => {
     dispatch(setAllCarsStarted(true));
+    setTimeout(() => setIsVisible(true), 5000);
   };
   return (
     <div>
-      <ModalWindow visible={isVisible} setVisible={setIsVisible}>
-        <h1>wasgood</h1>
-      </ModalWindow>
+      {isCarFound && (
+        <ModalWindow
+          className={classes.modalWindow}
+          visible={isVisible}
+          setVisible={setIsVisible}>
+          <h1>Winner</h1>
+          <h2>{winnerCar.name}</h2>
+          <SedanCar color={winnerCar.color} />
+          <h2>{winners?.apiResponse[0].time.toFixed(2)}</h2>
+        </ModalWindow>
+      )}
+
       <div className={classes.wrapper}>
         <CarForms
           updateFormCar={updateFormCar}
