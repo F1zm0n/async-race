@@ -1,12 +1,14 @@
-## Lnk to deployed UI
+## Link to deployed UI
 
 https://661633ae7c08957d93ce6e5a--keen-donut-f0421d.netlify.app
+
+## Total score is 370
 
 ## Checklist
 
 ## 🚀 UI Deployment
 
-- [ ] **Deployment Platform:** Successfully deploy the UI on one of the following platforms: GitHub Pages, Netlify, Vercel, Cloudflare Pages, or a similar service.
+- [x] **Deployment Platform:** Successfully deploy the UI on one of the following platforms: GitHub Pages, Netlify, Vercel, Cloudflare Pages, or a similar service.
 
 ## ✅ Requirements to Commits and Repository
 
