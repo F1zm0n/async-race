@@ -13,18 +13,6 @@ interface CarItemProps {
   car: ICar;
   deleteCar: (myCar: ICar) => void;
   selectCar: (id: number) => void;
-  // startEngine: (
-  //   car: ICar,
-  //   setDuration: (duration: number) => void,
-  //   setIsStarted: (isStarted: boolean) => void,
-  //   isWinnerExists: boolean,
-  //   winnerData: IWinner,
-  // ) => void;
-  // stopEngine: (
-  //   car: ICar,
-  //   setDuration: (duration: number) => void,
-  //   setIsStarted: (isStarted: boolean) => void,
-  // ) => void;
 }
 
 const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
@@ -51,7 +39,7 @@ const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
       transform: `translateX(0px)`,
     },
   };
-
+  // i had to do some shitcode
   const startEngine = async () => {
     try {
       const res = await axios.patch(
@@ -78,7 +66,7 @@ const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
       setIsStarted(false);
     }
   };
-
+  // here also
   const stopEngine = async () => {
     try {
       await axios.patch(
@@ -113,8 +101,12 @@ const CarItem: FC<CarItemProps> = ({ car, selectCar, deleteCar }) => {
         <NeonButton onClick={() => deleteCar(car)}>
           <i className="fa-solid fa-trash" />
         </NeonButton>
-        <NeonButton onClick={() => startEngine()}>D</NeonButton>
-        <NeonButton onClick={() => stopEngine()}>P</NeonButton>
+        <NeonButton disabled={isStarted} onClick={() => startEngine()}>
+          D
+        </NeonButton>
+        <NeonButton disabled={!isStarted} onClick={() => stopEngine()}>
+          P
+        </NeonButton>
         <div />
       </div>
       {/* <CSSTransition in={isStarted} timeout={10000} classNames="car"> */}

@@ -1,7 +1,6 @@
 import { FC, useState } from 'react';
 import '../../App.css';
 import CarList from '../../components/CarList/CarList';
-import WinnerBanner from '../../components/UI/WinnerBanner/WinnerBanner';
 import MyPagination from '../../components/MyPagination/MyPagination';
 import { PAGINATION_LIMIT } from '../../models/types/config';
 import WinnersApi from '../../api/WinnersApi';
@@ -83,7 +82,6 @@ const Garage: FC = () => {
         />
         {data && <CarList data={data} />}
         <div className={classes.footer}>
-          {isSuccess && <WinnerBanner winner={winners.apiResponse[0]} />}
           <MyPagination
             page={carsState.page}
             setPage={dispatchPage}

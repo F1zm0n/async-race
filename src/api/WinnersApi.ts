@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IWinner, IWinnersGetParams } from '../models/api/Winners';
-import { BASE_URL, PAGINATION_LIMIT } from '../models/types/config';
+import { BASE_URL } from '../models/types/config';
 
 export interface ResType {
   apiResponse: IWinner[];
@@ -21,7 +21,7 @@ export default createApi({
         url: '/winners',
         params: {
           ...params,
-          _limit: PAGINATION_LIMIT,
+          _limit: 10,
         },
       }),
       transformResponse(apiResponse: IWinner[], meta) {

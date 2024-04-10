@@ -24,7 +24,7 @@ const Winners: FC = () => {
   // states
   // queries
   const { data } = WinnersApi.useGetAllCarsQuery({
-    _limit: 7,
+    _limit: 10,
     _sort: dataState.selectedSort as SortParams | undefined,
     _order: dataState.selectedOrder as OrderParams | undefined,
     _page: winnersState.page,
@@ -54,11 +54,13 @@ const Winners: FC = () => {
         />
       </div>
       <WinnerList data={data?.apiResponse} />
-      <MyPagination
-        page={winnersState.page}
-        setPage={dispatchPage}
-        maxPage={Math.ceil((data?.totalCount as number) / PAGINATION_LIMIT)}
-      />
+      <div className={classes.footer}>
+        <MyPagination
+          page={winnersState.page}
+          setPage={dispatchPage}
+          maxPage={Math.ceil((data?.totalCount as number) / PAGINATION_LIMIT)}
+        />
+      </div>
     </div>
   );
 };
