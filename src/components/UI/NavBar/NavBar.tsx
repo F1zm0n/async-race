@@ -31,7 +31,7 @@ const NavBar: FC<NavBarProps> = ({ totalWinners, totalCars }) => {
           </li>
         )}
         <li>
-          <NavLink to="/garage">Garage</NavLink>
+          <NavLink to="/">Garage</NavLink>
         </li>
         <li>
           <NavLink to="/winners">Winners</NavLink>

@@ -4,10 +4,10 @@ export interface SortOptions {
 }
 
 export const PAGINATION_LIMIT = 7;
-export const BASE_URL = 'http://127.0.0.1:3000';
+export const BASE_URL = 'http://localhost:3000';
 
 export enum BaseRoutes {
-  GarageRoute = '/garage',
+  GarageRoute = '/',
   WinnersRoute = '/winners',
 }
 
