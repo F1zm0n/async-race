@@ -1,6 +1,6 @@
 ## Link to deployed UI
 
-https://661633ae7c08957d93ce6e5a--keen-donut-f0421d.netlify.app
+https://661ea0515fc4e630e5503977--peppy-horse-331958.netlify.app/
 
 ## Total score is 370
 
